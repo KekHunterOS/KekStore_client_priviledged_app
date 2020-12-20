@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.fdroid.fdroid.privileged;
+package org.fdroid.kekstore.privileged;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -49,9 +49,9 @@ public class PrivilegedService extends Service {
 
     public static final String TAG = "PrivilegedExtension";
     private static final String BROADCAST_ACTION_INSTALL =
-            "org.fdroid.fdroid.PrivilegedExtension.ACTION_INSTALL_COMMIT";
+            "org.fdroid.kekstore.PrivilegedExtension.ACTION_INSTALL_COMMIT";
     private static final String BROADCAST_ACTION_UNINSTALL =
-            "org.fdroid.fdroid.PrivilegedExtension.ACTION_UNINSTALL_COMMIT";
+            "org.fdroid.kekstore.PrivilegedExtension.ACTION_UNINSTALL_COMMIT";
     private static final String BROADCAST_SENDER_PERMISSION =
             "android.permission.INSTALL_PACKAGES";
     private static final String EXTRA_LEGACY_STATUS = "android.content.pm.extra.LEGACY_STATUS";
@@ -209,12 +209,8 @@ public class PrivilegedService extends Service {
                 return;
             }
 
-            if (Build.VERSION.SDK_INT >= 24) {
-                doPackageStage(packageURI);
-                mCallback = callback;
-            } else {
-                installPackageImpl(packageURI, flags, installerPackageName, callback);
-            }
+            doPackageStage(packageURI);
+            mCallback = callback;
         }
 
         @Override
@@ -222,27 +218,23 @@ public class PrivilegedService extends Service {
             if (!accessProtectionHelper.isCallerAllowed()) {
                 return;
             }
-            if (Build.VERSION.SDK_INT >= 24) {
-                mCallback = callback;
-                final PackageManager pm = getPackageManager();
-                final PackageInstaller packageInstaller = pm.getPackageInstaller();
+            mCallback = callback;
+            final PackageManager pm = getPackageManager();
+            final PackageInstaller packageInstaller = pm.getPackageInstaller();
 
-                /*
-                 * The client app used to set this to F-Droid, but we need it to be set to
-                 * this package's package name to be able to uninstall from here.
-                 */
-                pm.setInstallerPackageName(packageName, BuildConfig.APPLICATION_ID);
-                // Create a PendingIntent and use it to generate the IntentSender
-                Intent broadcastIntent = new Intent(BROADCAST_ACTION_UNINSTALL);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                        context, // context
-                        0, // arbitary
-                        broadcastIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-                packageInstaller.uninstall(packageName, pendingIntent.getIntentSender());
-            } else {
-                deletePackageImpl(packageName, flags, callback);
-            }
+            /*
+             * The client app used to set this to F-Droid, but we need it to be set to
+             * this package's package name to be able to uninstall from here.
+             */
+            pm.setInstallerPackageName(packageName, BuildConfig.APPLICATION_ID);
+            // Create a PendingIntent and use it to generate the IntentSender
+            Intent broadcastIntent = new Intent(BROADCAST_ACTION_UNINSTALL);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    context, // context
+                    0, // arbitary
+                    broadcastIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            packageInstaller.uninstall(packageName, pendingIntent.getIntentSender());
         }
     };
 

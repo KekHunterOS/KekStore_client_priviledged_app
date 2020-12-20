@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.fdroid.fdroid.privileged"
-    android:versionCode="2090"
-    android:versionName="0.2.9">
+    package="org.fdroid.kekstore.privileged"
+    android:versionCode="100"
+    android:versionName="1.0.0">
 
     <uses-sdk
-        android:minSdkVersion="29"
-        android:targetSdkVersion="30" />
+        android:minSdkVersion="28"
+        android:targetSdkVersion="29" />
 
     <!-- These permissions are only granted when this apk is installed as a privileged app! -->
     <uses-permission
@@ -24,13 +24,13 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <service
-            android:name=".PrivilegedService"
+            android:name="org.fdroid.kekstore.privileged.PrivilegedService"
             android:enabled="true"
             android:exported="true"
             android:process=":fdroid_privileged"
             tools:ignore="ExportedService">
             <intent-filter>
-                <action android:name="org.fdroid.fdroid.privileged.IPrivilegedService" />
+                <action android:name="org.fdroid.kekstore.privileged.IPrivilegedService" />
             </intent-filter>
         </service>
 

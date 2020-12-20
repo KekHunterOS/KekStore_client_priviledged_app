@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.fdroid.fdroid.privileged;
+package org.fdroid.kekstore.privileged;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

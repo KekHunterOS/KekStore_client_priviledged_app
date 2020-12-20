@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.fdroid.fdroid.privileged;
+package org.fdroid.kekstore.privileged;
 
-import org.fdroid.fdroid.privileged.IPrivilegedCallback;
+import org.fdroid.kekstore.privileged.IPrivilegedCallback;
 
 interface IPrivilegedService {
 

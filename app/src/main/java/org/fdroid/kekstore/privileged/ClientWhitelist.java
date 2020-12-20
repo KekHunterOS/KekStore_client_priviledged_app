@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.fdroid.fdroid.privileged;
+package org.fdroid.kekstore.privileged;
 
 import android.util.Pair;
 
@@ -35,7 +35,7 @@ public class ClientWhitelist {
 
     public static HashSet<Pair<String, String>> whitelist = new HashSet<>(Arrays.asList(
             // certificate SHA-256 of https//f-droid.org/F-Droid.apk
-            new Pair<>("org.fdroid.fdroid", "43238d512c1e5eb2d6569f4a3afbf5523418b82e0a3ed1552770abb9a9c9ccab")
+            new Pair<>("org.fdroid.kekstore", "57c463d8dbd257b3adf995c425813609be6fc7ff9485a18151881971f1e181a2")
     ));
 
 }
